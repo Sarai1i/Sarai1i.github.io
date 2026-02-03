@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sara Alqahtani | AI Portfolio</title>
+
+  <style>
+    :root{
+      --bg: #0b1220;
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --muted2: rgba(255,255,255,0.55);
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 18px 45px rgba(0,0,0,0.35);
+
+      --accent: #8B5CF6;
+      --accent2:#22D3EE;
+      --good: #34D399;
+      --warn: #FBBF24;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(139,92,246,0.25), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(34,211,238,0.20), transparent 60%),
+        radial-gradient(900px 700px at 55% 95%, rgba(52,211,153,0.12), transparent 60%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ opacity: .92; }
+
+    .container{
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    /* Top nav */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,0.55);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner{
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      padding: 12px 0;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .logo{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 25px rgba(139,92,246,0.22);
+    }
+    .nav-links{
+      display:flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .nav-links a{
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+    }
+    .nav-links a:hover{
+      border-color: var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 22px;
+      padding: 42px 28px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(500px 220px at 30% 10%, rgba(139,92,246,0.18), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-grid{
+      position: relative;
+      display:grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 18px;
+      align-items: center;
+    }
+    @media (max-width: 860px){
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-size: 13px;
+      width: fit-content;
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 99px;
+      background: var(--good);
+      box-shadow: 0 0 0 4px rgba(52,211,153,0.18);
+    }
+    h1{
+      margin: 12px 0 10px;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -0.6px;
+    }
+    .subtitle{
+      color: var(--muted);
+      font-size: 16px;
+      margin: 0 0 18px;
+      max-width: 62ch;
+    }
+    .cta{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.09);
+    }
+    .btn.primary{
+      border-color: rgba(139,92,246,0.45);
+      background: linear-gradient(135deg, rgba(139,92,246,0.95), rgba(34,211,238,0.90));
+      color: #07111f;
+    }
+
+    .hero-card{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .meta{
+      display:grid;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .meta strong{ color: var(--text); font-weight: 650; }
+    .meta-row{
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 28px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border-radius: 20px;
+    }
+    .section h2{
+      margin: 0 0 12px;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+    .muted{ color: var(--muted); }
+
+    /* Cards / grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+      transition: transform .15s ease, border-color .15s ease;
+      height: 100%;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.20);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .badge.good{
+      border-color: rgba(52,211,153,0.35);
+      background: rgba(52,211,153,0.10);
+      color: rgba(255,255,255,0.88);
+    }
+    .badge.win{
+      border-color: rgba(251,191,36,0.35);
+      background: rgba(251,191,36,0.10);
+      color: rgba(255,255,255,0.90);
+    }
+
+    .card h3{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.2px;
+    }
+    .card p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tags{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .tag{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.80);
+    }
+
+    .card-footer{
+      margin-top: auto;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 6px;
+    }
+    .link{
+      font-size: 13px;
+      color: rgba(255,255,255,0.88);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+    }
+    .link:hover{
+      background: rgba(255,255,255,0.07);
+    }
+
+    /* Timeline */
+    .timeline{
+      display:grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .item{
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 14px 14px;
+    }
+    .item-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .item-title{
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+    .item-sub{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+    .item-date{
+      color: var(--muted2);
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      height: fit-content;
+    }
+    ul{
+      margin: 10px 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Skills pills */
+    .pill-row{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .pill{
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.82);
+      font-size: 13px;
+    }
+
+    footer{
+      margin-top: 26px;
+      padding: 18px 0 0;
+      color: var(--muted2);
+      text-align:center;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>Sara Alqahtani</div>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker"><span class="dot"></span> Available for internships / opportunities</div>
+          <h1>AI Graduate building practical ML & Arabic OCR solutions.</h1>
+          <p class="subtitle">
+I specialize in Machine Learning, Deep Learning, Computer Vision, and Arabic NLP.
+I build end-to-end AI solutions from model pipelines to full-stack web applications.
+
+          </p>
+
+          <div class="cta">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" href="#contact">Contact Me</a>
+            <a class="btn" href="SaraAlqahtani_CV.pdf" download>Download CV</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="meta">
+            <div class="meta-row"><span>Location</span><strong>Riyadh, Saudi Arabia</strong></div>
+            <div class="meta-row"><span>Phone</span><strong>0500934880</strong></div>
+            <div class="meta-row"><span>Focus</span><strong>AI  • Arabic NLP</strong></div>
+<div class="meta-row"><span>Technologies</span><strong>Python • React • Flask • OCR • LLMs</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About</h2>
+      <p class="muted">
+        I'm an Artificial Intelligence Graduate working on machine learning, deep learning, and computer vision projects.
+        I build end-to-end solutions and enjoy collaborating in teams to deliver meaningful impact.
+      </p>
+    </section>
+
+    <section id="projects" class="section">
+      <h2>Projects</h2>
+      <p class="muted">Featured work and selected projects.</p>
+
+      <div class="grid" style="margin-top:14px;">
+        <article class="card">
+          <div class="badge good"> Featured • Research Approved</div>
+          <h3>Raqeem — Arabic OCR Enhancement System</h3>
+          <p>
+            A research-based web application improving Arabic OCR accuracy using LLMs and custom post-processing correction techniques.
+          </p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">React</span>
+            <span class="tag">Tesseract OCR</span>
+            <span class="tag">LLMs</span>
+            <span class="tag">Arabic NLP</span>
+          </div>
+          <div class="card-footer">
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="badge">AI • Speech</div>
+          <h3>Ladun — AI Therapy Platform for Stuttering</h3>
+          <p>
+            An AI-powered platform that analyzes speech and assigns therapy games for children with stuttering.
+          </p>
+          <div class="tags">
+            <span class="tag">SpeechDetection</span>
+            <span class="tag">AI</span>
+            <span class="tag">Games</span>
+          </div>
+          <div class="card-footer">
+          </div>
+        </article>
+
+
+      </div>
+    </section>
+
+    <section id="education" class="section">
+      <h2>Education</h2>
+
+      <div class="timeline">
+        <div class="item">
+          <div class="item-top">
+            <div>
+              <div class="item-title">Bachelor of Artificial Intelligence Science</div>
+              <div class="item-sub">Princess Nourah Bint Abdulrahman University — Riyadh, Saudi Arabia</div>
+            </div>
+            <div class="item-date">May 2025</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <h2>Experience</h2>
+
+      <div class="timeline">
+        <div class="item">
+          <div class="item-top">
+            <div>
+              <div class="item-title">AI Specialist Intern — KSGAAL</div>
+              <div class="item-sub">Riyadh, Saudi Arabia</div>
+            </div>
+            <div class="item-date">Jan 2025 – Jul 2025</div>
+          </div>
+          <ul>
+            <li>Processed and labeled Arabic speech data.</li>
+            <li>Improved Arabic OCR using Tesseract and LLMs.</li>
+            <li>Built a web tool (Raqeem) using React and Flask.</li>
+            <li>Designed a database for storing OCR results.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-top">
+            <div>
+              <div class="item-title">IT Support — Saudi Electronic University</div>
+              <div class="item-sub">Riyadh, Saudi Arabia</div>
+            </div>
+            <div class="item-date">Mar 2022</div>
+          </div>
+          <ul>
+            <li>Maintained websites and provided technical support for hardware and software.</li>
+            <li>Conducted preventive maintenance and followed specifications during repairs.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications" class="section">
+      <h2>Certifications</h2>
+
+      <div class="grid" style="margin-top:14px;">
+        <article class="card">
+          <div class="badge">Oracle</div>
+          <h3>Oracle Database SQL Fundamentals</h3>
+          <p>SQL fundamentals and database concepts.</p>
+        </article>
+
+        <article class="card">
+          <div class="badge">Huawei</div>
+          <h3>HCIA-AI</h3>
+          <p>AI foundations and applied concepts.</p>
+        </article>
+
+        <article class="card">
+          <div class="badge">IBM</div>
+          <h3>Machine Learning with Python</h3>
+          <p>Practical ML workflows with Python.</p>
+        </article>
+
+        <article class="card">
+          <div class="badge">PMI</div>
+          <h3>CAPM — Associate in Project Management</h3>
+          <p>Project management fundamentals.</p>
+        </article>
+
+        <article class="card">
+          <div class="badge">Udemy</div>
+          <h3>Web Development Bootcamp</h3>
+          <p>End-to-end web development training.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="achievements" class="section">
+  <h2>Achievements</h2>
+
+  <div class="grid" style="margin-top:14px;">
+
+    <article class="card">
+      <div class="badge win"> Award</div>
+      <h3>6th Place — Development Datathon</h3>
+      <p>Recognized achievement at a development datathon (Ministry of Housing).</p>
+    </article>
+
+    <article class="card">
+      <div class="badge good"> Research Paper</div>
+      <h3>Raqim: A Hybrid Framework for Arabic OCR Correction</h3>
+      <p>
+        Published in <strong>Procedia Computer Science</strong> (Elsevier) and presented at
+        <strong>ACLing 2025</strong>. I am listed as one of the authors.
+      </p>
+
+      <div class="tags">
+        <span class="tag">Arabic OCR</span>
+        <span class="tag">Dictionary-based Correction</span>
+        <span class="tag">LLMs</span>
+        <span class="tag">Tesseract</span>
+      </div>
+
+      <div class="card-footer">
+        <a class="link" href="ACLing2025_88 (1).pdf" target="_blank" rel="noopener">Paper PDF</a>
+        <a class="link" href="https://github.com/ksaa-nlp/raqim" target="_blank" rel="noopener">GitHub Repo</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+    <section id="skills" class="section">
+      <h2>Skills</h2>
+
+      <div class="pill-row">
+        <span class="pill">Python</span>
+        <span class="pill">React</span>
+        <span class="pill">Swift</span>
+        <span class="pill">Flask</span>
+        <span class="pill">Machine Learning</span>
+        <span class="pill">Deep Learning</span>
+        <span class="pill">Computer Vision</span>
+        <span class="pill">NLP</span>
+        <span class="pill">MongoDB</span>
+        <span class="pill">Problem Solving</span>
+        <span class="pill">Teamwork</span>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <p class="muted">Open to discussions, collaborations, and future opportunities.</p>
+
+      <div class="pill-row" style="margin-top:12px;">
+        <a class="pill" href="mailto:Sarahalqahtanii@hotmail.com">Sarahalqahtanii@hotmail.com</a>
+        <a class="pill" href="tel:+966500934880">+966 50 009 34880</a>
+        <a class="pill" href="Https://www.linkedin.com/in/sara-alqahtani-08469226a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="pill" href="https://github.com/Sarai1i" target="_blank" rel="noopener">GitHub</a>
+        <a class="pill" href="SaraAlqahtani_CV.pdf" download>Download CV</a>
+      </div>
+
+    </section>
+
+    <footer>
+      © 2026 Sara Alqahtani • Built with HTML & CSS
+    </footer>
+
+  </main>
+
+</body>
+</html>
